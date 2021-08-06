@@ -5,7 +5,7 @@
 
 ## Requerimientos
 
-`python >3.8`
+`python >= 3.8`
 
 Crear un *virtualenv*, activarlo e instalar las librerías necesarias:
 
