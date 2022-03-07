@@ -30,11 +30,11 @@ else:
 	
 load_dotenv()
 
-OS = platform.system() 
-if OS in ['Linux', 'Java', 'Windows']:
-	MAC = False
-elif OS == "Darwin":
-	MAC = True
+OS = platform.system()
+if OS == "Darwin":
+	key_command = Keys.COMMAND
+else:
+	key_command = Keys.CONTROL
 
 """
 Parámetros Configurables
@@ -117,18 +117,12 @@ try:
 				inp_input = WebDriverWait(driver, 10).until( EC.presence_of_element_located((By.CSS_SELECTOR, 'div#TestCaseForm--inputEditor textarea')))
 				inp_input.send_keys(Keys.TAB)
 				
-				if MAC:
-					inp_input.send_keys(Keys.COMMAND, "a")
-				else:
-					inp_input.send_keys(Keys.CONTROL, "a")
+				inp_input.send_keys(key_command, "a")
 				inp_input.send_keys(Keys.BACKSPACE)
 
 				#Copia input.txt fila pega a la casilla de input
 				xerox.copy(data_input)
-				if MAC:
-					inp_input.send_keys(Keys.COMMAND, "v")
-				else:
-					inp_input.send_keys(Keys.CONTROL, "v")
+				iinp_input.send_keys(key_command "v")
 
 			#Casilla de archivos
 			file_input = driver.find_element_by_id('TestCaseForm--zipFileUpload')
