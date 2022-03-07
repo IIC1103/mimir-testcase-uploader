@@ -5,16 +5,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from tqdm import tqdm
-
 import os
 from os import environ
 from sys import argv
-
 import xerox
-
 from dotenv import load_dotenv
-
 import argparse
+import platform
 
 parser = argparse.ArgumentParser(description="A MimirHQ testcase uploader")
 
@@ -32,6 +29,12 @@ else:
 	part = f"part_{args.part}"
 	
 load_dotenv()
+
+OS = platform.system() 
+if OS in ['Linux', 'Java', 'Windows']:
+	MAC = False
+elif OS == "Darwin":
+	MAC = True
 
 """
 Parámetros Configurables
@@ -113,16 +116,19 @@ try:
 				#Encuentra la casilla de input, fila borra todo su contenido
 				inp_input = WebDriverWait(driver, 10).until( EC.presence_of_element_located((By.CSS_SELECTOR, 'div#TestCaseForm--inputEditor textarea')))
 				inp_input.send_keys(Keys.TAB)
-				# Mac
-				# inp_input.send_keys(Keys.COMMAND, "a")
-				inp_input.send_keys(Keys.CONTROL, "a")
+				
+				if MAC:
+					inp_input.send_keys(Keys.COMMAND, "a")
+				else:
+					inp_input.send_keys(Keys.CONTROL, "a")
 				inp_input.send_keys(Keys.BACKSPACE)
 
 				#Copia input.txt fila pega a la casilla de input
 				xerox.copy(data_input)
-				# Mac
-				# inp_input.send_keys(Keys.COMMAND, "v")
-				inp_input.send_keys(Keys.CONTROL, "v")
+				if MAC:
+					inp_input.send_keys(Keys.COMMAND, "v")
+				else:
+					inp_input.send_keys(Keys.CONTROL, "v")
 
 			#Casilla de archivos
 			file_input = driver.find_element_by_id('TestCaseForm--zipFileUpload')
