@@ -122,7 +122,7 @@ try:
 
 				#Copia input.txt fila pega a la casilla de input
 				xerox.copy(data_input)
-				iinp_input.send_keys(key_command "v")
+				inp_input.send_keys(key_command, "v")
 
 			#Casilla de archivos
 			file_input = driver.find_element_by_id('TestCaseForm--zipFileUpload')
